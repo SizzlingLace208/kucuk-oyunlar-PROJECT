@@ -10,12 +10,12 @@
 | Auth Sistemi | 🟢 Tamamlandı | %100 | 2023-09-16 | 2023-09-20 |
 | Oyun Sayfası | 🟢 Tamamlandı | %100 | 2023-09-26 | 2023-10-05 |
 | Oyun Entegrasyonu | 🟡 Devam Ediyor | %75 | 2023-10-06 | 2023-10-15 |
-| Dashboard | ⚪ Başlamadı | %0 | 2023-10-16 | 2023-10-25 |
+| Dashboard | 🟡 Devam Ediyor | %60 | 2023-10-16 | 2023-10-25 |
 | API | ⚪ Başlamadı | %0 | 2023-10-26 | 2023-11-05 |
 | Test | ⚪ Başlamadı | %0 | 2023-11-06 | 2023-11-15 |
-| Deployment | 🟡 Devam Ediyor | %65 | 2023-11-16 | 2023-11-20 |
+| Deployment | 🟡 Devam Ediyor | %50 | 2023-11-16 | 2023-11-20 |
 
-**Genel İlerleme:** %64 tamamlandı
+**Genel İlerleme:** %70 tamamlandı
 
 ## 📋 Detaylı İlerleme
 
@@ -144,7 +144,7 @@
 - Oyun Entegrasyonu 🟡
 
 ### Sprint 4 (2023-10-16 - 2023-10-31)
-- Dashboard ⚪
+- Dashboard 🟡
 - API ⚪
 
 ### Sprint 5 (2023-11-01 - 2023-11-20)
@@ -297,4 +297,4 @@
 
 ---
 
-*Son Güncelleme: 2024-03-15* 
+*Son Güncelleme: 2024-03-16* 
