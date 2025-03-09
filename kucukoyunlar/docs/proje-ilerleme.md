@@ -9,13 +9,13 @@
 | Ana Sayfa | 🟢 Tamamlandı | %100 | 2023-09-21 | 2023-09-25 |
 | Auth Sistemi | 🟢 Tamamlandı | %100 | 2023-09-16 | 2023-09-20 |
 | Oyun Sayfası | 🟢 Tamamlandı | %100 | 2023-09-26 | 2023-10-05 |
-| Oyun Entegrasyonu | ⚪ Başlamadı | %0 | 2023-10-06 | 2023-10-15 |
+| Oyun Entegrasyonu | 🟡 Devam Ediyor | %70 | 2023-10-06 | 2023-10-15 |
 | Dashboard | ⚪ Başlamadı | %0 | 2023-10-16 | 2023-10-25 |
 | API | ⚪ Başlamadı | %0 | 2023-10-26 | 2023-11-05 |
 | Test | ⚪ Başlamadı | %0 | 2023-11-06 | 2023-11-15 |
 | Deployment | 🟡 Devam Ediyor | %60 | 2023-11-16 | 2023-11-20 |
 
-**Genel İlerleme:** %56 tamamlandı
+**Genel İlerleme:** %63 tamamlandı
 
 ## 📋 Detaylı İlerleme
 
@@ -90,11 +90,11 @@
 - ✅ Oyun paylaşma özellikleri
 
 ### 6. Oyun Entegrasyonu
-- ⬜ Oyun SDK
-- ⬜ Oyun-platform iletişimi
-- ⬜ Skor kaydetme
+- ✅ Oyun SDK
+- ✅ Oyun-platform iletişimi
+- ✅ Skor kaydetme
+- ✅ Örnek oyun implementasyonu
 - ⬜ Güvenlik kontrolleri
-- ⬜ Örnek oyun implementasyonu
 
 ### 7. Dashboard
 - ⬜ Kullanıcı profili düzenleme
@@ -136,12 +136,12 @@
 - UI Bileşenleri ✅
 
 ### Sprint 2 (2023-09-16 - 2023-09-30)
-- Auth Sistemi ⚪
+- Auth Sistemi ✅
 - Ana Sayfa ✅
 
 ### Sprint 3 (2023-10-01 - 2023-10-15)
-- Oyun Sayfası 🟢
-- Oyun Entegrasyonu ⚪
+- Oyun Sayfası ✅
+- Oyun Entegrasyonu 🟡
 
 ### Sprint 4 (2023-10-16 - 2023-10-31)
 - Dashboard ⚪
@@ -149,9 +149,19 @@
 
 ### Sprint 5 (2023-11-01 - 2023-11-20)
 - Test ⚪
-- Deployment ⚪
+- Deployment 🟡
 
 ## 🔄 Güncellemeler
+
+### 2024-03-14
+- Oyun entegrasyonu geliştirildi
+  - GameSDK sınıfı oluşturuldu
+  - GameManager sınıfı oluşturuldu
+  - Örnek oyunlar eklendi (Uzay Macerası, Bulmaca Ustası, Hızlı Yarış)
+  - Oyun sayfası GameManager ile entegre edildi
+  - Oyun embed sayfası oluşturuldu
+  - Skor kaydetme sistemi eklendi
+  - Oyun kontrol butonları eklendi (duraklat, devam et, yeniden başlat)
 
 ### 2024-03-13
 - GitHub entegrasyonu tamamlandı
@@ -256,7 +266,7 @@
 
 ## 📌 Öncelikli Görevler
 
-1. Oyun entegrasyonuna başlanması
+1. Oyun entegrasyonu tamamlanması
 2. Dashboard geliştirmeye başlanması
 3. API geliştirmeye başlanması
 4. Test süreçlerinin planlanması
@@ -267,6 +277,7 @@
 - Next.js Client Component'lerde event handler'lar ile ilgili uyarılar
 - React forwardRef ile ilgili TypeScript hataları (geçici olarak @ts-ignore ile çözüldü)
 - Supabase client tam olarak yapılandırılmadı
+- Oyun SDK'sında güvenlik kontrolleri eksik
 
 ## 🔍 Notlar
 
@@ -278,4 +289,4 @@
 
 ---
 
-*Son Güncelleme: 2024-03-13* 
+*Son Güncelleme: 2024-03-14* 

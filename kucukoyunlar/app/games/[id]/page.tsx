@@ -1,5 +1,10 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { GameManager } from '@/lib/games/GameManager';
+import FavoriteButton from '@/components/ui/FavoriteButton';
+import ShareButton from '@/components/ui/ShareButton';
+
 // Örnek oyun verileri
 const games: Record<string, Game> = {
   '1': {
@@ -105,13 +110,43 @@ const games: Record<string, Game> = {
   },
 };
 
-import { useState } from 'react';
-import FavoriteButton from '@/components/ui/FavoriteButton';
-import ShareButton from '@/components/ui/ShareButton';
-
 export default function GamePage({ params }: { params: { id: string } }) {
   const gameId = params.id;
   const game = games[gameId as keyof typeof games];
+  const [gameManager, setGameManager] = useState<GameManager | null>(null);
+  const [latestScore, setLatestScore] = useState<number | null>(null);
+  const [isGameReady, setIsGameReady] = useState(false);
+  
+  useEffect(() => {
+    // Oyun yöneticisini başlat
+    if (typeof window !== 'undefined') {
+      const manager = new GameManager({
+        gameId,
+        containerId: 'game-container',
+        width: 800,
+        height: 600,
+        allowFullscreen: true,
+        onScoreSaved: (scoreData) => {
+          console.log('Skor kaydedildi:', scoreData);
+          setLatestScore(scoreData.score);
+        },
+        onGameReady: () => {
+          setIsGameReady(true);
+        },
+        onGameOver: (score, metadata) => {
+          console.log('Oyun bitti:', score, metadata);
+          setLatestScore(score);
+        }
+      });
+      
+      setGameManager(manager);
+      
+      // Temizlik fonksiyonu
+      return () => {
+        manager.destroy();
+      };
+    }
+  }, [gameId]);
   
   if (!game) {
     return (
@@ -141,8 +176,15 @@ export default function GamePage({ params }: { params: { id: string } }) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Oyun Önizleme */}
         <div className="lg:col-span-2">
-          <div className="bg-muted rounded-lg overflow-hidden aspect-video flex items-center justify-center">
-            <div className="text-4xl font-bold">{game.title.charAt(0)}</div>
+          <div id="game-container" className="container-game bg-muted rounded-lg overflow-hidden">
+            {!isGameReady && (
+              <div className="flex items-center justify-center h-full">
+                <div className="text-center">
+                  <div className="spinner mb-4"></div>
+                  <p>Oyun yükleniyor...</p>
+                </div>
+              </div>
+            )}
           </div>
           
           <div className="mt-6 bg-card border border-border rounded-lg p-6">
@@ -162,13 +204,28 @@ export default function GamePage({ params }: { params: { id: string } }) {
             <p className="mb-6">{game.description}</p>
             
             <div className="flex items-center justify-between">
-              <a
-                href="#"
-                className="flex-1 text-center py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors text-lg font-medium mr-4"
-                onClick={(e) => e.preventDefault()}
-              >
-                Şimdi Oyna
-              </a>
+              <div className="flex space-x-4">
+                <button
+                  className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors"
+                  onClick={() => gameManager?.pauseGame()}
+                >
+                  Duraklat
+                </button>
+                
+                <button
+                  className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors"
+                  onClick={() => gameManager?.resumeGame()}
+                >
+                  Devam Et
+                </button>
+                
+                <button
+                  className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors"
+                  onClick={() => gameManager?.restartGame()}
+                >
+                  Yeniden Başlat
+                </button>
+              </div>
               
               <div className="flex space-x-2">
                 <FavoriteButton 
@@ -183,6 +240,13 @@ export default function GamePage({ params }: { params: { id: string } }) {
                 />
               </div>
             </div>
+            
+            {latestScore !== null && (
+              <div className="mt-6 p-4 bg-accent/10 rounded-lg">
+                <h3 className="font-semibold text-lg mb-2">Son Skorunuz</h3>
+                <p className="text-2xl font-bold">{latestScore} puan</p>
+              </div>
+            )}
           </div>
         </div>
         
@@ -251,59 +315,58 @@ export default function GamePage({ params }: { params: { id: string } }) {
                 ))}
             </div>
           </div>
-        </div>
-      </div>
-      
-      {/* Yorumlar Bölümü */}
-      <div className="mt-8">
-        <div className="bg-card border border-border rounded-lg p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-semibold">Yorumlar</h2>
-            <button 
-              className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors"
-              onClick={(e) => e.preventDefault()}
-            >
-              Yorum Yap
-            </button>
-          </div>
           
-          {game.comments && game.comments.length > 0 ? (
+          <div className="bg-card border border-border rounded-lg p-6 mt-6">
+            <h2 className="text-xl font-semibold mb-4">Yorumlar</h2>
+            
             <div className="space-y-6">
               {game.comments.map((comment) => (
-                <div key={comment.id} className="border-b border-border pb-6 last:border-0">
-                  <div className="flex justify-between items-start mb-2">
+                <div key={comment.id} className="border-b border-border pb-4 last:border-0 last:pb-0">
+                  <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center">
-                      <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center mr-3">
-                        <span className="font-medium">{comment.user.charAt(0)}</span>
+                      <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center mr-2">
+                        <span className="font-bold text-sm">{comment.user.charAt(0)}</span>
                       </div>
-                      <div>
-                        <h3 className="font-medium">{comment.user}</h3>
-                        <p className="text-sm text-muted-foreground">{comment.date}</p>
-                      </div>
+                      <span className="font-medium">{comment.user}</span>
                     </div>
                     <div className="flex items-center">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <span key={i} className={i < comment.rating ? "text-accent" : "text-muted"}>★</span>
-                      ))}
+                      <span className="text-yellow-500 mr-1">★</span>
+                      <span>{comment.rating}</span>
                     </div>
                   </div>
-                  <p className="mt-3">{comment.text}</p>
+                  <p className="text-sm text-muted-foreground mb-1">{comment.date}</p>
+                  <p>{comment.text}</p>
                 </div>
               ))}
             </div>
-          ) : (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground mb-4">Bu oyun için henüz yorum yapılmamış.</p>
-              <button 
-                className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors"
-                onClick={(e) => e.preventDefault()}
-              >
-                İlk Yorumu Sen Yap
-              </button>
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
   );
+}
+
+// Game tipi
+interface Game {
+  id: string;
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  category: string;
+  playCount: number;
+  rating: number;
+  releaseDate: string;
+  developer: string;
+  controls: string;
+  tags: string[];
+  comments: GameComment[];
+}
+
+interface GameComment {
+  id: string;
+  user: string;
+  avatar: string;
+  date: string;
+  rating: number;
+  text: string;
 } 
