@@ -392,11 +392,26 @@
 - Dashboard'a mesajlaşma sekmesi eklendi
 - Proje genel ilerlemesi %80'e ulaştı
 
-*Son Güncelleme: 2024-03-18*
+#### 2024-03-19
+- Oyun arama ve filtreleme sistemi eklendi
+  - Kategori filtreleme
+  - Zorluk seviyesi filtreleme
+  - Metin tabanlı arama
+  - Sıralama seçenekleri (tarih, puan, popülerlik)
+- Oyun servisi oluşturuldu
+  - Oyunları getirme
+  - Oyun detaylarını getirme
+  - Benzer oyunları getirme
+  - Popüler oyunları getirme
+- Oyun listesi bileşeni geliştirildi
+  - Yükleme durumları için Skeleton bileşeni
+  - Hata yönetimi
+  - Boş sonuç durumu
+- Proje genel ilerlemesi %85'e ulaştı
 
 ## 📌 Öncelikli Görevler
 
-1. Oyun arama ve filtreleme sisteminin tamamlanması
+1. ~~Oyun arama ve filtreleme sisteminin tamamlanması~~
 2. Çok oyunculu oyun desteğinin eklenmesi
 3. Liderlik tablosu oluşturulması
 4. Deployment sürecinin tamamlanması
@@ -427,4 +442,4 @@
 
 ---
 
-*Son Güncelleme: 2024-03-18* 
+*Son Güncelleme: 2024-03-19* 

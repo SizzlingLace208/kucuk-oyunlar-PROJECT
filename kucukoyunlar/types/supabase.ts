@@ -105,6 +105,11 @@ export interface Database {
           description: string
           category: string
           image_url: string | null
+          created_at: string
+          updated_at?: string
+          play_count: number
+          rating: number
+          difficulty: string
         }
         Insert: {
           id?: string
@@ -112,6 +117,11 @@ export interface Database {
           description: string
           category: string
           image_url?: string | null
+          created_at?: string
+          updated_at?: string
+          play_count?: number
+          rating?: number
+          difficulty?: string
         }
         Update: {
           id?: string
@@ -119,6 +129,11 @@ export interface Database {
           description?: string
           category?: string
           image_url?: string | null
+          created_at?: string
+          updated_at?: string
+          play_count?: number
+          rating?: number
+          difficulty?: string
         }
       }
       game_history: {
