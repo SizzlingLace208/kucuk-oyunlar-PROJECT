@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Input from '@/components/ui/Input';
-import Button from '@/components/ui/Button';
-import Select from '@/components/ui/Select';
+import Input from '../ui/Input';
+import Button from '../ui/Button';
+import Select from '../ui/Select';
 import { 
   GameCategory, 
   GameFilter, 
@@ -98,18 +98,18 @@ export default function GameSearch({ onSearch, initialFilter }: GameSearchProps)
           <label htmlFor="category" className="block text-sm font-medium mb-1">
             Kategori
           </label>
-          <Select
+          <select
             id="category"
             value={filter.category}
             onChange={handleCategoryChange}
-            className="w-full"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
           >
             {categories.map((category) => (
               <option key={category} value={category}>
                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </option>
             ))}
-          </Select>
+          </select>
         </div>
         
         {/* Zorluk filtresi */}
@@ -117,18 +117,18 @@ export default function GameSearch({ onSearch, initialFilter }: GameSearchProps)
           <label htmlFor="difficulty" className="block text-sm font-medium mb-1">
             Zorluk
           </label>
-          <Select
+          <select
             id="difficulty"
             value={filter.difficulty}
             onChange={handleDifficultyChange}
-            className="w-full"
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
           >
             {difficulties.map((difficulty) => (
               <option key={difficulty} value={difficulty}>
                 {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
               </option>
             ))}
-          </Select>
+          </select>
         </div>
         
         {/* Sıralama */}
@@ -137,37 +137,37 @@ export default function GameSearch({ onSearch, initialFilter }: GameSearchProps)
             Sıralama
           </label>
           <div className="flex space-x-2">
-            <Select
+            <select
               id="sortBy"
               value={filter.sortBy}
               onChange={handleSortChange}
-              className="w-full"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="created_at">Tarih</option>
               <option value="rating">Puan</option>
               <option value="play_count">Popülerlik</option>
-            </Select>
-            <Select
+            </select>
+            <select
               id="sortOrder"
               value={filter.sortOrder}
               onChange={handleSortOrderChange}
-              className="w-20"
+              className="w-20 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="desc">↓</option>
               <option value="asc">↑</option>
-            </Select>
+            </select>
           </div>
         </div>
       </div>
       
       <div className="mt-4 flex justify-end">
-        <Button 
-          variant="outline" 
+        <button 
+          type="button"
           onClick={handleReset}
-          className="mr-2"
+          className="px-4 py-2 bg-secondary text-white rounded-md hover:bg-secondary/80 transition-colors mr-2"
         >
           Sıfırla
-        </Button>
+        </button>
       </div>
     </div>
   );

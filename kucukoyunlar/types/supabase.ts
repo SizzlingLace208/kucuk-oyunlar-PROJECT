@@ -104,36 +104,30 @@ export interface Database {
           title: string
           description: string
           category: string
-          image_url: string | null
+          thumbnail_url: string
+          game_url: string
           created_at: string
-          updated_at?: string
-          play_count: number
-          rating: number
-          difficulty: string
+          is_featured: boolean
         }
         Insert: {
           id?: string
           title: string
           description: string
           category: string
-          image_url?: string | null
+          thumbnail_url?: string
+          game_url?: string
           created_at?: string
-          updated_at?: string
-          play_count?: number
-          rating?: number
-          difficulty?: string
+          is_featured?: boolean
         }
         Update: {
           id?: string
           title?: string
           description?: string
           category?: string
-          image_url?: string | null
+          thumbnail_url?: string
+          game_url?: string
           created_at?: string
-          updated_at?: string
-          play_count?: number
-          rating?: number
-          difficulty?: string
+          is_featured?: boolean
         }
       }
       game_history: {

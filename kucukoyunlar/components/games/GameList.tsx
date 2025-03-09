@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import { Game, GameFilter, searchGames } from '@/lib/services/game-service';
 import GameSearch from './GameSearch';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -66,15 +64,14 @@ export default function GameList() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {games.map((game) => (
-            <Link href={`/games/${game.id}`} key={game.id}>
-              <div className="bg-card rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+            <div key={game.id} className="bg-card rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+              <a href={`/games/${game.id}`} className="block">
                 <div className="relative h-48">
                   {game.image_url ? (
-                    <Image
+                    <img
                       src={game.image_url}
                       alt={game.title}
-                      fill
-                      className="object-cover"
+                      className="object-cover w-full h-full"
                     />
                   ) : (
                     <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -90,23 +87,25 @@ export default function GameList() {
                     </div>
                   )}
                 </div>
-                
-                <div className="p-4 flex-grow">
+              </a>
+              
+              <div className="p-4 flex-grow">
+                <a href={`/games/${game.id}`} className="block">
                   <h3 className="font-semibold text-lg mb-1">{game.title}</h3>
                   <p className="text-sm text-gray-500 line-clamp-2 mb-2">{game.description}</p>
-                  
-                  <div className="flex items-center justify-between mt-auto">
-                    <div className="flex items-center">
-                      <span className="text-yellow-500 mr-1">★</span>
-                      <span className="text-sm">{game.rating?.toFixed(1) || 'N/A'}</span>
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      {game.play_count || 0} oynanma
-                    </div>
+                </a>
+                
+                <div className="flex items-center justify-between mt-auto">
+                  <div className="flex items-center">
+                    <span className="text-yellow-500 mr-1">★</span>
+                    <span className="text-sm">{game.rating?.toFixed(1) || 'N/A'}</span>
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {game.play_count || 0} oynanma
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}
