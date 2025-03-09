@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 import { GameManager } from '@/lib/games/GameManager';
 import FavoriteButton from '@/components/ui/FavoriteButton';
 import ShareButton from '@/components/ui/ShareButton';
+import { getGameById, getSimilarGames } from '@/lib/services/game-service';
+import { getGameLeaderboard } from '@/lib/services/leaderboard-service';
+import LeaderboardTable from '@/components/leaderboard/LeaderboardTable';
+import { Skeleton } from '@/components/ui/skeleton';
 
 // Örnek oyun verileri
 const games: Record<string, Game> = {
@@ -111,43 +115,57 @@ const games: Record<string, Game> = {
 };
 
 export default function GamePage({ params }: { params: { id: string } }) {
-  const gameId = params.id;
-  const game = games[gameId as keyof typeof games];
-  const [gameManager, setGameManager] = useState<GameManager | null>(null);
-  const [latestScore, setLatestScore] = useState<number | null>(null);
-  const [isGameReady, setIsGameReady] = useState(false);
-  
+  const [game, setGame] = useState<any>(null);
+  const [similarGames, setSimilarGames] = useState<any[]>([]);
+  const [leaderboard, setLeaderboard] = useState<any[]>([]);
+  const [activeTab, setActiveTab] = useState<'overview' | 'leaderboard' | 'comments'>('overview');
+  const [loading, setLoading] = useState(true);
+  const [leaderboardLoading, setLeaderboardLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    // Oyun yöneticisini başlat
-    if (typeof window !== 'undefined') {
-      const manager = new GameManager({
-        gameId,
-        containerId: 'game-container',
-        width: 800,
-        height: 600,
-        allowFullscreen: true,
-        onScoreSaved: (scoreData) => {
-          console.log('Skor kaydedildi:', scoreData);
-          setLatestScore(scoreData.score);
-        },
-        onGameReady: () => {
-          setIsGameReady(true);
-        },
-        onGameOver: (score, metadata) => {
-          console.log('Oyun bitti:', score, metadata);
-          setLatestScore(score);
+    async function loadGame() {
+      setLoading(true);
+      try {
+        // Oyun verilerini getir
+        const { data: gameData, error: gameError } = await getGameById(params.id);
+        if (gameError) throw new Error(gameError.message);
+        if (!gameData) throw new Error('Oyun bulunamadı');
+        
+        setGame(gameData);
+        
+        // Benzer oyunları getir
+        const { data: similarData, error: similarError } = await getSimilarGames(params.id);
+        if (!similarError) {
+          setSimilarGames(similarData || []);
         }
-      });
-      
-      setGameManager(manager);
-      
-      // Temizlik fonksiyonu
-      return () => {
-        manager.destroy();
-      };
+        
+        // Liderlik tablosunu getir
+        loadLeaderboard();
+      } catch (err) {
+        console.error('Oyun yüklenirken hata oluştu:', err);
+        setError('Oyun yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+      } finally {
+        setLoading(false);
+      }
     }
-  }, [gameId]);
+    
+    loadGame();
+  }, [params.id]);
   
+  async function loadLeaderboard() {
+    setLeaderboardLoading(true);
+    try {
+      const { data, error } = await getGameLeaderboard(params.id, { limit: 10 });
+      if (error) throw new Error(error.message);
+      setLeaderboard(data || []);
+    } catch (err) {
+      console.error('Liderlik tablosu yüklenirken hata oluştu:', err);
+    } finally {
+      setLeaderboardLoading(false);
+    }
+  }
+
   if (!game) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
@@ -177,7 +195,7 @@ export default function GamePage({ params }: { params: { id: string } }) {
         {/* Oyun Önizleme */}
         <div className="lg:col-span-2">
           <div id="game-container" className="container-game bg-muted rounded-lg overflow-hidden">
-            {!isGameReady && (
+            {!loading && (
               <div className="flex items-center justify-center h-full">
                 <div className="text-center">
                   <div className="spinner mb-4"></div>
@@ -340,6 +358,169 @@ export default function GamePage({ params }: { params: { id: string } }) {
               ))}
             </div>
           </div>
+        </div>
+      </div>
+      
+      {/* Tablar */}
+      <div className="flex border-b border-gray-200 mb-6 mt-8">
+        <button
+          className={`py-2 px-4 font-medium ${
+            activeTab === 'overview'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-gray-500 hover:text-gray-700'
+          }`}
+          onClick={() => setActiveTab('overview')}
+        >
+          Genel Bakış
+        </button>
+        <button
+          className={`py-2 px-4 font-medium ${
+            activeTab === 'leaderboard'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-gray-500 hover:text-gray-700'
+          }`}
+          onClick={() => setActiveTab('leaderboard')}
+        >
+          Liderlik Tablosu
+        </button>
+        <button
+          className={`py-2 px-4 font-medium ${
+            activeTab === 'comments'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-gray-500 hover:text-gray-700'
+          }`}
+          onClick={() => setActiveTab('comments')}
+        >
+          Yorumlar
+        </button>
+      </div>
+      
+      {/* Tab içeriği */}
+      {activeTab === 'overview' && (
+        <div>
+          {/* Oyun açıklaması */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Oyun Hakkında</h2>
+            <p className="text-gray-700">{game?.description}</p>
+          </div>
+          
+          {/* Oyun bilgileri */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Oyun Bilgileri</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h3 className="font-semibold text-gray-700">Kategori</h3>
+                <p>{game?.category}</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-700">Oynanma Sayısı</h3>
+                <p>{game?.play_count?.toLocaleString() || 0}</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-700">Puan</h3>
+                <p>{game?.rating?.toFixed(1) || 'N/A'} / 5.0</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-700">Zorluk</h3>
+                <p>{game?.difficulty || 'Orta'}</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Kontroller */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Kontroller</h2>
+            <p className="text-gray-700">Yön tuşları ile hareket edin, Boşluk tuşu ile ateş edin</p>
+          </div>
+        </div>
+      )}
+      
+      {activeTab === 'leaderboard' && (
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">Liderlik Tablosu</h2>
+          <LeaderboardTable 
+            entries={leaderboard} 
+            isLoading={leaderboardLoading} 
+            showGameTitle={false} 
+          />
+          <div className="mt-4 text-center">
+            <a 
+              href={`/leaderboard?gameId=${params.id}`} 
+              className="text-primary hover:underline"
+            >
+              Tüm liderlik tablosunu görüntüle
+            </a>
+          </div>
+        </div>
+      )}
+      
+      {activeTab === 'comments' && (
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">Yorumlar</h2>
+          {/* Yorumlar burada gösterilecek */}
+          <div className="space-y-4">
+            {game?.comments?.map((comment: any) => (
+              <div key={comment.id} className="bg-white p-4 rounded-lg shadow">
+                <div className="flex items-center mb-2">
+                  <div className="w-10 h-10 rounded-full bg-gray-300 mr-3 flex items-center justify-center">
+                    {comment.avatar ? (
+                      <img 
+                        src={comment.avatar} 
+                        alt={comment.user} 
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-gray-600">{comment.user.charAt(0).toUpperCase()}</span>
+                    )}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">{comment.user}</h3>
+                    <div className="flex items-center">
+                      <div className="flex text-yellow-500 mr-1">
+                        {[...Array(5)].map((_, i) => (
+                          <span key={i}>{i < comment.rating ? '★' : '☆'}</span>
+                        ))}
+                      </div>
+                      <span className="text-gray-500 text-sm">{comment.date}</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-700">{comment.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {/* Benzer oyunlar */}
+      <div className="mt-12">
+        <h2 className="text-2xl font-semibold mb-6">Benzer Oyunlar</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {similarGames.map((similarGame) => (
+            <a 
+              key={similarGame.id} 
+              href={`/games/${similarGame.id}`} 
+              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
+            >
+              <div className="relative h-40">
+                {similarGame.image_url ? (
+                  <img 
+                    src={similarGame.image_url} 
+                    alt={similarGame.title} 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-400">Resim yok</span>
+                  </div>
+                )}
+              </div>
+              <div className="p-4">
+                <h3 className="font-semibold text-lg mb-1">{similarGame.title}</h3>
+                <p className="text-sm text-gray-500 line-clamp-2">{similarGame.description}</p>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </div>

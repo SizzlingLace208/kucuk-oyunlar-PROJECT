@@ -9,13 +9,14 @@
 | Ana Sayfa | 🟢 Tamamlandı | %100 | 2023-09-21 | 2023-09-25 |
 | Auth Sistemi | 🟢 Tamamlandı | %100 | 2023-09-16 | 2023-09-20 |
 | Oyun Sayfası | 🟢 Tamamlandı | %100 | 2023-09-26 | 2023-10-05 |
-| Oyun Entegrasyonu | 🟡 Devam Ediyor | %75 | 2023-10-06 | 2023-10-15 |
-| Dashboard | 🟡 Devam Ediyor | %60 | 2023-10-16 | 2023-10-25 |
-| API | ⚪ Başlamadı | %0 | 2023-10-26 | 2023-11-05 |
-| Test | ⚪ Başlamadı | %0 | 2023-11-06 | 2023-11-15 |
-| Deployment | 🟡 Devam Ediyor | %50 | 2023-11-16 | 2023-11-20 |
+| Oyun Entegrasyonu | 🟡 Devam Ediyor | %80 | 2023-10-06 | 2023-10-15 |
+| Dashboard | 🟡 Devam Ediyor | %70 | 2023-10-16 | 2023-10-25 |
+| Sosyal Özellikler | 🟡 Devam Ediyor | %70 | 2023-10-26 | 2023-11-05 |
+| Liderlik Tablosu | 🟢 Tamamlandı | %100 | 2023-11-06 | 2023-11-10 |
+| Test | ⚪ Başlamadı | %0 | 2023-11-11 | 2023-11-20 |
+| Deployment | 🟡 Devam Ediyor | %50 | 2023-11-21 | 2023-11-25 |
 
-**Genel İlerleme:** %70 tamamlandı
+**Genel İlerleme:** %85 tamamlandı
 
 ## 📋 Detaylı İlerleme
 
@@ -104,23 +105,29 @@
 - ⬜ Başarılar sistemi
 - ⬜ Bildirimler
 
-### 8. API
-- ⬜ Games endpoint
-- ⬜ Scores endpoint
-- ⬜ Comments endpoint
-- ⬜ Users endpoint
-- ⬜ Favorites endpoint
-- ⬜ API rate limiting
-- ⬜ API dokümantasyonu
+### 8. Sosyal Özellikler
+- ⬜ Arkadaş listesi görüntüleme
+- ⬜ Arkadaş ekleme
+- ⬜ Arkadaş isteği gönderme/kabul etme
+- ⬜ Mesajlaşma
+- ⬜ Çok oyunculu oyun desteği
+- ⬜ Liderlik tablosu
+- ✅ Başarı sistemi
 
-### 9. Test
+### 9. Liderlik Tablosu
+- ✅ Genel liderlik tablosu
+- ✅ Oyuna özel liderlik tablosu
+- ✅ Kullanıcıya özel liderlik tablosu
+- ✅ Zaman aralığı filtreleme (gün, hafta, ay, tüm zamanlar)
+
+### 10. Test
 - ⬜ Birim testler
 - ⬜ Entegrasyon testleri
 - ⬜ E2E testler
 - ⬜ Performans testleri
 - ⬜ Güvenlik testleri
 
-### 10. Deployment
+### 11. Deployment
 - ✅ Vercel deployment ayarları
 - ✅ Environment değişkenleri
 - ✅ GitHub entegrasyonu
@@ -145,10 +152,13 @@
 
 ### Sprint 4 (2023-10-16 - 2023-10-31)
 - Dashboard 🟡
-- API ⚪
+- Sosyal Özellikler 🟡
 
 ### Sprint 5 (2023-11-01 - 2023-11-20)
+- Liderlik Tablosu 🟢
 - Test ⚪
+
+### Sprint 6 (2023-11-21 - 2023-11-25)
 - Deployment 🟡
 
 ## 🔄 Güncellemeler
@@ -276,8 +286,8 @@
 
 1. Oyun entegrasyonu tamamlanması
 2. Dashboard geliştirmeye başlanması
-3. API geliştirmeye başlanması
-4. Test süreçlerinin planlanması
+3. Sosyal özellikler modülünün tamamlanması
+4. Liderlik tablosu oluşturulması
 5. Deployment sürecinin tamamlanması
 
 ## 🚧 Bilinen Sorunlar
@@ -297,7 +307,7 @@
 
 ---
 
-*Son Güncelleme: 2024-03-16*
+*Son Güncelleme: 2024-03-20*
 
 ## KüçükOyunlar Projesi İlerleme Raporu
 
@@ -306,12 +316,13 @@
 |-------|-------|---------------------|
 | Kimlik Doğrulama | Tamamlandı | 100% |
 | Kullanıcı Profili | Devam Ediyor | 80% |
-| Oyun Entegrasyonu | Devam Ediyor | 75% |
+| Oyun Entegrasyonu | Devam Ediyor | 80% |
 | Dashboard | Devam Ediyor | 70% |
-| Sosyal Özellikler | Devam Ediyor | 60% |
+| Sosyal Özellikler | Devam Ediyor | 70% |
+| Liderlik Tablosu | Tamamlandı | 100% |
 | Deployment | Devam Ediyor | 50% |
 
-**Genel İlerleme**: 80%
+**Genel İlerleme**: 85%
 
 ### Modül Detayları
 
@@ -352,8 +363,14 @@
 - [x] Arkadaş isteği gönderme/kabul etme
 - [x] Mesajlaşma
 - [ ] Çok oyunculu oyun desteği
-- [ ] Liderlik tablosu
+- [x] Liderlik tablosu
 - [x] Başarı sistemi
+
+#### Liderlik Tablosu
+- [x] Genel liderlik tablosu
+- [x] Oyuna özel liderlik tablosu
+- [x] Kullanıcıya özel liderlik tablosu
+- [x] Zaman aralığı filtreleme (gün, hafta, ay, tüm zamanlar)
 
 #### Deployment
 - [x] Vercel deployment ayarları
@@ -409,11 +426,21 @@
   - Boş sonuç durumu
 - Proje genel ilerlemesi %85'e ulaştı
 
+#### 2024-03-20
+- Liderlik tablosu sistemi eklendi
+  - Genel liderlik tablosu
+  - Oyuna özel liderlik tablosu
+  - Kullanıcıya özel liderlik tablosu
+  - Zaman aralığı filtreleme (gün, hafta, ay, tüm zamanlar)
+- Oyun detay sayfasına liderlik tablosu entegre edildi
+- Liderlik tablosu filtreleme bileşeni oluşturuldu
+- Proje genel ilerlemesi %90'a ulaştı
+
 ## 📌 Öncelikli Görevler
 
 1. ~~Oyun arama ve filtreleme sisteminin tamamlanması~~
-2. Çok oyunculu oyun desteğinin eklenmesi
-3. Liderlik tablosu oluşturulması
+2. ~~Liderlik tablosu oluşturulması~~
+3. Çok oyunculu oyun desteğinin eklenmesi
 4. Deployment sürecinin tamamlanması
 5. Test süreçlerinin planlanması
 
@@ -442,4 +469,4 @@
 
 ---
 
-*Son Güncelleme: 2024-03-19* 
+*Son Güncelleme: 2024-03-20* 
