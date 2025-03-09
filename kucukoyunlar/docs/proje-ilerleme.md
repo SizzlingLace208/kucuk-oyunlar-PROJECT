@@ -13,9 +13,9 @@
 | Dashboard | ⚪ Başlamadı | %0 | 2023-10-16 | 2023-10-25 |
 | API | ⚪ Başlamadı | %0 | 2023-10-26 | 2023-11-05 |
 | Test | ⚪ Başlamadı | %0 | 2023-11-06 | 2023-11-15 |
-| Deployment | 🟡 Devam Ediyor | %50 | 2023-11-16 | 2023-11-20 |
+| Deployment | 🟡 Devam Ediyor | %60 | 2023-11-16 | 2023-11-20 |
 
-**Genel İlerleme:** %55 tamamlandı
+**Genel İlerleme:** %56 tamamlandı
 
 ## 📋 Detaylı İlerleme
 
@@ -123,6 +123,7 @@
 ### 10. Deployment
 - ✅ Vercel deployment ayarları
 - ✅ Environment değişkenleri
+- ✅ GitHub entegrasyonu
 - ⬜ Supabase production ortamı
 - ⬜ CI/CD pipeline
 - ⬜ Performans optimizasyonu
@@ -151,6 +152,13 @@
 - Deployment ⚪
 
 ## 🔄 Güncellemeler
+
+### 2024-03-13
+- GitHub entegrasyonu tamamlandı
+  - Proje GitHub'a aktarıldı: https://github.com/SizzlingLace208/kucuk-oyunlar-PROJECT.git
+  - GitHub token bilgileri güvenli bir şekilde saklandı
+  - .gitignore dosyası güncellendi
+  - İlk commit oluşturuldu ve push edildi
 
 ### 2024-03-12
 - Vercel deployment hazırlıkları tamamlandı
@@ -270,4 +278,4 @@
 
 ---
 
-*Son Güncelleme: 2024-03-12* 
+*Son Güncelleme: 2024-03-13* 
