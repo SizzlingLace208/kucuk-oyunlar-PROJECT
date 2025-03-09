@@ -14,6 +14,8 @@ import {
   type Friend
 } from '@/lib/services/user-service';
 import { Skeleton } from '@/components/ui/skeleton';
+import FriendRequests from '@/components/friends/FriendRequests';
+import FriendSearch from '@/components/friends/FriendSearch';
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -37,21 +39,21 @@ export default function DashboardPage() {
       setLoading(true);
       try {
         // Kullanıcı profili
-        const userProfile = await getUserProfile(user.id);
+        const userProfile = await getUserProfile(user?.id || '');
         if (userProfile) {
           setProfile(userProfile);
         }
         
         // Başarılar
-        const userAchievements = await getUserAchievements(user.id);
+        const userAchievements = await getUserAchievements(user?.id || '');
         setAchievements(userAchievements);
         
         // Son oyunlar
-        const userRecentGames = await getRecentGames(user.id);
+        const userRecentGames = await getRecentGames(user?.id || '');
         setRecentGames(userRecentGames);
         
         // Arkadaşlar
-        const userFriends = await getFriends(user.id);
+        const userFriends = await getFriends(user?.id || '');
         setFriends(userFriends);
       } catch (error) {
         console.error('Kullanıcı verileri yüklenirken hata oluştu:', error);
@@ -275,42 +277,59 @@ export default function DashboardPage() {
       
       {/* Arkadaşlar */}
       {activeTab === 'friends' && (
-        <div className="bg-card border border-border rounded-lg p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold">Arkadaşlar</h2>
-            <button className="btn-secondary text-sm">Arkadaş Ekle</button>
-          </div>
+        <div className="space-y-8">
+          {/* Arkadaşlık İstekleri */}
+          <FriendRequests />
           
-          {friends.length > 0 ? (
-            <div className="space-y-4">
-              {friends.map((friend) => (
-                <div key={friend.id} className="flex items-center justify-between p-4 border border-border rounded-lg">
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center mr-3">
-                      <span className="font-bold">{friend.username.charAt(0)}</span>
-                    </div>
-                    <div>
-                      <h3 className="font-medium">{friend.username}</h3>
-                      <div className="flex items-center text-sm">
-                        <span className={`w-2 h-2 rounded-full mr-2 ${friend.status === 'online' ? 'bg-green-500' : 'bg-gray-400'}`}></span>
-                        <span className="text-muted-foreground">{friend.status === 'online' ? 'Çevrimiçi' : 'Çevrimdışı'}</span>
+          {/* Arkadaş Arama */}
+          <FriendSearch />
+          
+          {/* Mevcut Arkadaşlar */}
+          <div className="bg-card border border-border rounded-lg p-6">
+            <h2 className="text-xl font-semibold mb-6">Arkadaşlarım</h2>
+            
+            {friends.length > 0 ? (
+              <div className="space-y-4">
+                {friends.map((friend) => (
+                  <div key={friend.id} className="flex items-center justify-between p-4 border border-border rounded-lg">
+                    <div className="flex items-center">
+                      <div className="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center mr-3">
+                        {friend.avatarUrl ? (
+                          <img 
+                            src={friend.avatarUrl} 
+                            alt={friend.username} 
+                            className="w-10 h-10 rounded-full object-cover"
+                          />
+                        ) : (
+                          <span className="font-bold">{friend.username.charAt(0)}</span>
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="font-medium">{friend.username}</h3>
+                        <div className="flex items-center text-sm">
+                          <span className={`w-2 h-2 rounded-full mr-2 ${friend.status === 'online' ? 'bg-green-500' : 'bg-gray-400'}`}></span>
+                          <span className="text-muted-foreground">{friend.status === 'online' ? 'Çevrimiçi' : 'Çevrimdışı'}</span>
+                        </div>
                       </div>
                     </div>
+                    <div className="flex space-x-2">
+                      <button className="p-2 hover:bg-secondary/20 rounded-md" title="Mesaj Gönder">
+                        💬
+                      </button>
+                      <button className="p-2 hover:bg-secondary/20 rounded-md" title="Oyuna Davet Et">
+                        🎮
+                      </button>
+                      <button className="p-2 hover:bg-secondary/20 rounded-md text-red-500" title="Arkadaşlıktan Çıkar">
+                        ✖
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex space-x-2">
-                    <button className="p-2 hover:bg-secondary/20 rounded-md">
-                      💬
-                    </button>
-                    <button className="p-2 hover:bg-secondary/20 rounded-md">
-                      🎮
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-center text-muted-foreground py-4">Henüz arkadaşınız yok</p>
-          )}
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-muted-foreground py-4">Henüz arkadaşınız yok</p>
+            )}
+          </div>
         </div>
       )}
       

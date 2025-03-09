@@ -297,4 +297,127 @@
 
 ---
 
-*Son Güncelleme: 2024-03-16* 
+*Son Güncelleme: 2024-03-16*
+
+## KüçükOyunlar Projesi İlerleme Raporu
+
+### Genel İlerleme
+| Modül | Durum | Tamamlanma Yüzdesi |
+|-------|-------|---------------------|
+| Kimlik Doğrulama | Tamamlandı | 100% |
+| Kullanıcı Profili | Devam Ediyor | 80% |
+| Oyun Entegrasyonu | Devam Ediyor | 75% |
+| Dashboard | Devam Ediyor | 60% |
+| Sosyal Özellikler | Devam Ediyor | 25% |
+| Deployment | Devam Ediyor | 50% |
+
+**Genel İlerleme**: 75%
+
+### Modül Detayları
+
+#### Kimlik Doğrulama
+- [x] Supabase Auth entegrasyonu
+- [x] Kayıt formu
+- [x] Giriş formu
+- [x] Şifre sıfırlama
+- [x] Oturum yönetimi
+- [x] Korumalı rotalar
+
+#### Kullanıcı Profili
+- [x] Profil sayfası tasarımı
+- [x] Profil düzenleme
+- [x] Avatar yükleme
+- [x] Kullanıcı istatistikleri
+- [ ] Profil gizlilik ayarları
+
+#### Oyun Entegrasyonu
+- [x] Oyun yöneticisi
+- [x] Oyun listesi
+- [x] Oyun detay sayfası
+- [x] Oyun kategorileri
+- [ ] Oyun arama ve filtreleme
+- [ ] Oyun puanlama sistemi
+
+#### Dashboard
+- [x] Dashboard ana yapısı
+- [x] Kullanıcı istatistikleri görünümü
+- [x] Son oyunlar listesi
+- [x] Başarılar listesi
+- [ ] Arkadaş aktiviteleri
+- [ ] Bildirimler
+
+#### Sosyal Özellikler
+- [x] Arkadaş listesi görüntüleme
+- [ ] Arkadaş ekleme
+- [ ] Arkadaş isteği gönderme/kabul etme
+- [ ] Mesajlaşma
+- [ ] Çok oyunculu oyun desteği
+- [ ] Liderlik tablosu
+- [x] Başarı sistemi
+
+#### Deployment
+- [x] Vercel deployment ayarları
+- [x] Environment değişkenleri
+- [ ] Supabase production ortamı
+- [ ] CI/CD pipeline
+- [ ] Performans optimizasyonu
+- [ ] SEO optimizasyonu
+
+### Son Güncellemeler
+
+#### 2024-03-15
+- TypeScript ve linter hataları çözüldü
+- Supabase bağımlılıkları güncellendi
+- Tip tanımlamaları düzeltildi
+
+#### 2024-03-16
+- Dashboard modülü geliştirildi
+- Kullanıcı profili, başarılar ve son oyunlar Supabase ile entegre edildi
+- Yükleme durumları için Skeleton bileşeni eklendi
+- Kullanıcı servisleri oluşturuldu
+
+#### 2024-03-17
+- Sosyal özellikler modülü geliştirilmeye başlandı
+- Arkadaş listesi görüntüleme özelliği eklendi
+- Başarı sistemi entegrasyonu tamamlandı
+- Proje genel ilerlemesi %75'e ulaştı
+
+*Son Güncelleme: 2024-03-17*
+
+## 📌 Öncelikli Görevler
+
+1. Sosyal özelliklerin geliştirilmesi
+   - Arkadaş ekleme sistemi
+   - Mesajlaşma sistemi
+   - Arkadaş aktiviteleri
+2. Oyun arama ve filtreleme sisteminin tamamlanması
+3. Bildirim sisteminin geliştirilmesi
+4. Deployment sürecinin tamamlanması
+5. Test süreçlerinin planlanması
+
+## 🚧 Bilinen Sorunlar
+
+- Next.js geliştirme sunucusunda zaman zaman "ENOENT" hataları oluşabiliyor
+- Webpack önbellek hataları görülebiliyor
+- Supabase veri modeli tam olarak optimize edilmedi
+- Çoklu port kullanımı sorunu (3000, 3001, 3002 portları kullanımda olabiliyor)
+
+## 🔍 Öneriler
+
+- `.next` klasörünü temizleyerek geliştirme sunucusunu yeniden başlatmak hataları çözebilir
+- Supabase veri modelini optimize etmek için indeksler eklenebilir
+- Webpack önbellek sorunlarını çözmek için `npm cache clean --force` komutu kullanılabilir
+- Çoklu port kullanımı sorununu çözmek için kullanılmayan portları serbest bırakmak gerekebilir
+- Tip tanımlamalarını daha modüler hale getirmek için global tip tanımlamaları oluşturulabilir
+
+## 🔍 Notlar
+
+- Proje planı, geliştirme sürecinde değişiklik gösterebilir.
+- İlerleme yüzdeleri, tamamlanan görevlere göre hesaplanmaktadır.
+- Her sprint sonunda ilerleme dokümantasyonu güncellenecektir.
+- Tailwind CSS ile ilgili sorunlar için VSCode'a "Tailwind CSS IntelliSense" eklentisi yüklenmelidir.
+- Proje dizin yapısı `kücükoyunlar/kucukoyunlar` şeklindedir, komutlar doğru dizinde çalıştırılmalıdır.
+
+---
+
+*Son Güncelleme: 2024-03-17* 
