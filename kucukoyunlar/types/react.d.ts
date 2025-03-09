@@ -2,6 +2,8 @@
  * React için tip tanımlamaları
  */
 
+import * as React from 'react';
+
 declare module 'react' {
   // Key tipini tanımlıyoruz
   export type Key = string | number;
@@ -178,13 +180,13 @@ declare module 'react' {
     type: string;
   }
 
-  // Hooks
-  export function useState<T>(initialState: T | (() => T)): [T, (newState: T | ((prevState: T) => T)) => void];
-  export function useEffect(effect: () => void | (() => void), deps?: ReadonlyArray<any>): void;
+  // React.createContext için tip tanımı
+  export function createContext<T>(defaultValue: T): Context<T>;
+  
+  // Diğer eksik olabilecek React fonksiyonları için tip tanımları
+  export function useState<T>(initialState: T | (() => T)): [T, React.Dispatch<React.SetStateAction<T>>];
+  export function useEffect(effect: React.EffectCallback, deps?: React.DependencyList): void;
   export function useContext<T>(context: Context<T>): T;
-  export function useRef<T>(initialValue: T): { current: T };
-  export function useCallback<T extends (...args: any[]) => any>(callback: T, deps: ReadonlyArray<any>): T;
-  export function useMemo<T>(factory: () => T, deps: ReadonlyArray<any>): T;
 
   // Context
   export interface Context<T> {

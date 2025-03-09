@@ -1,19 +1,20 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { User } from '@supabase/supabase-js';
+import type { User } from '@supabase/supabase-js';
 import { 
   getCurrentUser, 
   onAuthStateChange, 
-  signIn, 
-  signOut, 
-  signUp, 
-  resetPassword,
-  updatePassword,
-  updateProfile,
-  signInWithGoogle
+  signIn as authSignIn, 
+  signUp as authSignUp, 
+  signOut as authSignOut,
+  resetPassword as authResetPassword,
+  updatePassword as authUpdatePassword,
+  updateProfile as authUpdateProfile,
+  signInWithGoogle as authSignInWithGoogle
 } from '@/lib/supabase/auth';
 
+// AuthContext tipi
 interface AuthContextType {
   user: User | null;
   loading: boolean;
@@ -26,7 +27,8 @@ interface AuthContextType {
   signInWithGoogle: () => Promise<any>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// AuthContext oluştur
+const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -39,7 +41,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const currentUser = await getCurrentUser();
         setUser(currentUser);
       } catch (error) {
-        console.error('Kullanıcı kontrolü sırasında hata:', error);
+        console.error('Kullanıcı bilgileri alınamadı:', error);
       } finally {
         setLoading(false);
       }
@@ -52,22 +54,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(user);
     });
 
-    // Temizleme fonksiyonu
     return () => {
-      authListener?.subscription.unsubscribe();
+      // Temizlik fonksiyonu
+      if (authListener && authListener.subscription) {
+        authListener.subscription.unsubscribe();
+      }
     };
   }, []);
 
   const value = {
     user,
     loading,
-    signIn,
-    signUp,
-    signOut,
-    resetPassword,
-    updatePassword,
-    updateProfile,
-    signInWithGoogle
+    signIn: authSignIn,
+    signUp: authSignUp,
+    signOut: authSignOut,
+    resetPassword: authResetPassword,
+    updatePassword: authUpdatePassword,
+    updateProfile: authUpdateProfile,
+    signInWithGoogle: authSignInWithGoogle
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -75,7 +79,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (context === null) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;

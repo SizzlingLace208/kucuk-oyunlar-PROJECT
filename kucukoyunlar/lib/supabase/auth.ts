@@ -1,5 +1,5 @@
 import { supabase } from './client';
-import { User } from '@supabase/supabase-js';
+import type { User } from '@supabase/supabase-js';
 
 // Kullanıcı oturum açma
 export async function signIn(email: string, password: string) {

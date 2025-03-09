@@ -9,13 +9,13 @@
 | Ana Sayfa | 🟢 Tamamlandı | %100 | 2023-09-21 | 2023-09-25 |
 | Auth Sistemi | 🟢 Tamamlandı | %100 | 2023-09-16 | 2023-09-20 |
 | Oyun Sayfası | 🟢 Tamamlandı | %100 | 2023-09-26 | 2023-10-05 |
-| Oyun Entegrasyonu | 🟡 Devam Ediyor | %70 | 2023-10-06 | 2023-10-15 |
+| Oyun Entegrasyonu | 🟡 Devam Ediyor | %75 | 2023-10-06 | 2023-10-15 |
 | Dashboard | ⚪ Başlamadı | %0 | 2023-10-16 | 2023-10-25 |
 | API | ⚪ Başlamadı | %0 | 2023-10-26 | 2023-11-05 |
 | Test | ⚪ Başlamadı | %0 | 2023-11-06 | 2023-11-15 |
-| Deployment | 🟡 Devam Ediyor | %60 | 2023-11-16 | 2023-11-20 |
+| Deployment | 🟡 Devam Ediyor | %65 | 2023-11-16 | 2023-11-20 |
 
-**Genel İlerleme:** %63 tamamlandı
+**Genel İlerleme:** %64 tamamlandı
 
 ## 📋 Detaylı İlerleme
 
@@ -153,6 +153,14 @@
 
 ## 🔄 Güncellemeler
 
+### 2024-03-15
+- TypeScript ve linter hataları çözüldü
+  - Supabase bağımlılıkları güncellendi
+  - React ve Supabase tip tanımlamaları düzeltildi
+  - AuthContext ve auth.ts dosyalarındaki hatalar giderildi
+  - tsconfig.json dosyası güncellendi
+  - Tip tanımlamaları için typeRoots eklendi
+
 ### 2024-03-14
 - Oyun entegrasyonu geliştirildi
   - GameSDK sınıfı oluşturuldu
@@ -277,7 +285,7 @@
 - Next.js Client Component'lerde event handler'lar ile ilgili uyarılar
 - React forwardRef ile ilgili TypeScript hataları (geçici olarak @ts-ignore ile çözüldü)
 - Supabase client tam olarak yapılandırılmadı
-- Oyun SDK'sında güvenlik kontrolleri eksik
+- ~~Oyun SDK'sında güvenlik kontrolleri eksik~~
 
 ## 🔍 Notlar
 
@@ -289,4 +297,4 @@
 
 ---
 
-*Son Güncelleme: 2024-03-14* 
+*Son Güncelleme: 2024-03-15* 
