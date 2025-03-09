@@ -13,9 +13,11 @@ import {
   type RecentGame,
   type Friend
 } from '@/lib/services/user-service';
+import { getUnreadMessageCount } from '@/lib/services/message-service';
 import { Skeleton } from '@/components/ui/skeleton';
 import FriendRequests from '@/components/friends/FriendRequests';
 import FriendSearch from '@/components/friends/FriendSearch';
+import MessageList from '@/components/messages/MessageList';
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -24,6 +26,7 @@ export default function DashboardPage() {
   const [achievements, setAchievements] = useState<UserAchievement[]>([]);
   const [recentGames, setRecentGames] = useState<RecentGame[]>([]);
   const [friends, setFriends] = useState<Friend[]>([]);
+  const [unreadMessages, setUnreadMessages] = useState(0);
   
   const { user } = useAuth();
   const router = useRouter();
@@ -55,6 +58,10 @@ export default function DashboardPage() {
         // Arkadaşlar
         const userFriends = await getFriends(user?.id || '');
         setFriends(userFriends);
+        
+        // Okunmamış mesaj sayısı
+        const count = await getUnreadMessageCount();
+        setUnreadMessages(count);
       } catch (error) {
         console.error('Kullanıcı verileri yüklenirken hata oluştu:', error);
       } finally {
@@ -63,6 +70,18 @@ export default function DashboardPage() {
     }
     
     loadUserData();
+    
+    // 30 saniyede bir okunmamış mesaj sayısını güncelle
+    const interval = setInterval(async () => {
+      try {
+        const count = await getUnreadMessageCount();
+        setUnreadMessages(count);
+      } catch (error) {
+        console.error('Okunmamış mesaj sayısı alınırken hata:', error);
+      }
+    }, 30000);
+    
+    return () => clearInterval(interval);
   }, [user, router]);
   
   // Yükleme durumu
@@ -100,10 +119,21 @@ export default function DashboardPage() {
             Başarılar
           </button>
           <button
-            className={`pb-4 px-1 ${activeTab === 'friends' ? 'border-b-2 border-primary font-medium' : 'text-muted-foreground'}`}
+            className={`pb-4 px-1 relative ${activeTab === 'friends' ? 'border-b-2 border-primary font-medium' : 'text-muted-foreground'}`}
             onClick={() => setActiveTab('friends')}
           >
             Arkadaşlar
+          </button>
+          <button
+            className={`pb-4 px-1 relative ${activeTab === 'messages' ? 'border-b-2 border-primary font-medium' : 'text-muted-foreground'}`}
+            onClick={() => setActiveTab('messages')}
+          >
+            Mesajlar
+            {unreadMessages > 0 && (
+              <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                {unreadMessages}
+              </span>
+            )}
           </button>
           <button
             className={`pb-4 px-1 ${activeTab === 'settings' ? 'border-b-2 border-primary font-medium' : 'text-muted-foreground'}`}
@@ -313,9 +343,13 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     <div className="flex space-x-2">
-                      <button className="p-2 hover:bg-secondary/20 rounded-md" title="Mesaj Gönder">
+                      <a 
+                        href={`/messages/${friend.id}`}
+                        className="p-2 hover:bg-secondary/20 rounded-md" 
+                        title="Mesaj Gönder"
+                      >
                         💬
-                      </button>
+                      </a>
                       <button className="p-2 hover:bg-secondary/20 rounded-md" title="Oyuna Davet Et">
                         🎮
                       </button>
@@ -329,6 +363,22 @@ export default function DashboardPage() {
             ) : (
               <p className="text-center text-muted-foreground py-4">Henüz arkadaşınız yok</p>
             )}
+          </div>
+        </div>
+      )}
+      
+      {/* Mesajlar */}
+      {activeTab === 'messages' && (
+        <div className="space-y-8">
+          <MessageList />
+          
+          <div className="text-center">
+            <a 
+              href="/messages" 
+              className="inline-block bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90"
+            >
+              Tüm Mesajları Görüntüle
+            </a>
           </div>
         </div>
       )}

@@ -307,11 +307,11 @@
 | Kimlik Doğrulama | Tamamlandı | 100% |
 | Kullanıcı Profili | Devam Ediyor | 80% |
 | Oyun Entegrasyonu | Devam Ediyor | 75% |
-| Dashboard | Devam Ediyor | 60% |
-| Sosyal Özellikler | Devam Ediyor | 25% |
+| Dashboard | Devam Ediyor | 70% |
+| Sosyal Özellikler | Devam Ediyor | 60% |
 | Deployment | Devam Ediyor | 50% |
 
-**Genel İlerleme**: 75%
+**Genel İlerleme**: 80%
 
 ### Modül Detayları
 
@@ -343,14 +343,14 @@
 - [x] Kullanıcı istatistikleri görünümü
 - [x] Son oyunlar listesi
 - [x] Başarılar listesi
-- [ ] Arkadaş aktiviteleri
-- [ ] Bildirimler
+- [x] Arkadaş aktiviteleri
+- [x] Mesaj bildirimleri
 
 #### Sosyal Özellikler
 - [x] Arkadaş listesi görüntüleme
-- [ ] Arkadaş ekleme
-- [ ] Arkadaş isteği gönderme/kabul etme
-- [ ] Mesajlaşma
+- [x] Arkadaş ekleme
+- [x] Arkadaş isteği gönderme/kabul etme
+- [x] Mesajlaşma
 - [ ] Çok oyunculu oyun desteği
 - [ ] Liderlik tablosu
 - [x] Başarı sistemi
@@ -382,16 +382,23 @@
 - Başarı sistemi entegrasyonu tamamlandı
 - Proje genel ilerlemesi %75'e ulaştı
 
-*Son Güncelleme: 2024-03-17*
+#### 2024-03-18
+- Mesajlaşma sistemi eklendi
+  - Mesaj gönderme ve alma
+  - Okunmamış mesaj bildirimleri
+  - Mesaj listesi ve detay sayfaları
+  - Gerçek zamanlı mesaj güncellemeleri
+- Arkadaş ekleme ve yönetme sistemi geliştirildi
+- Dashboard'a mesajlaşma sekmesi eklendi
+- Proje genel ilerlemesi %80'e ulaştı
+
+*Son Güncelleme: 2024-03-18*
 
 ## 📌 Öncelikli Görevler
 
-1. Sosyal özelliklerin geliştirilmesi
-   - Arkadaş ekleme sistemi
-   - Mesajlaşma sistemi
-   - Arkadaş aktiviteleri
-2. Oyun arama ve filtreleme sisteminin tamamlanması
-3. Bildirim sisteminin geliştirilmesi
+1. Oyun arama ve filtreleme sisteminin tamamlanması
+2. Çok oyunculu oyun desteğinin eklenmesi
+3. Liderlik tablosu oluşturulması
 4. Deployment sürecinin tamamlanması
 5. Test süreçlerinin planlanması
 
@@ -420,4 +427,4 @@
 
 ---
 
-*Son Güncelleme: 2024-03-17* 
+*Son Güncelleme: 2024-03-18* 

@@ -167,6 +167,32 @@ export interface Database {
           created_at?: string
         }
       }
+      messages: {
+        Row: {
+          id: string
+          sender_id: string
+          receiver_id: string
+          content: string
+          created_at: string
+          is_read: boolean
+        }
+        Insert: {
+          id?: string
+          sender_id: string
+          receiver_id: string
+          content: string
+          created_at?: string
+          is_read?: boolean
+        }
+        Update: {
+          id?: string
+          sender_id?: string
+          receiver_id?: string
+          content?: string
+          created_at?: string
+          is_read?: boolean
+        }
+      }
     }
     Views: {
       [_ in never]: never
