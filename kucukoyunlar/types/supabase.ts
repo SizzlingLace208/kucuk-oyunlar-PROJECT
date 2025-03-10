@@ -108,6 +108,9 @@ export interface Database {
           game_url: string
           created_at: string
           is_featured: boolean
+          rating: number | null
+          play_count: number | null
+          difficulty: string | null
         }
         Insert: {
           id?: string
@@ -118,6 +121,9 @@ export interface Database {
           game_url?: string
           created_at?: string
           is_featured?: boolean
+          rating?: number | null
+          play_count?: number | null
+          difficulty?: string | null
         }
         Update: {
           id?: string
@@ -128,6 +134,9 @@ export interface Database {
           game_url?: string
           created_at?: string
           is_featured?: boolean
+          rating?: number | null
+          play_count?: number | null
+          difficulty?: string | null
         }
       }
       game_history: {
@@ -200,6 +209,128 @@ export interface Database {
           content?: string
           created_at?: string
           is_read?: boolean
+        }
+      }
+      comments: {
+        Row: {
+          id: string
+          game_id: string
+          user_id: string
+          content: string
+          rating: number
+          created_at: string
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          game_id: string
+          user_id: string
+          content: string
+          rating: number
+          created_at?: string
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          game_id?: string
+          user_id?: string
+          content?: string
+          rating?: number
+          created_at?: string
+          updated_at?: string | null
+        }
+      }
+      game_comments: {
+        Row: {
+          id: string
+          game_id: string
+          user_id: string
+          content: string
+          rating: number
+          created_at: string
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          game_id: string
+          user_id: string
+          content: string
+          rating: number
+          created_at?: string
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          game_id?: string
+          user_id?: string
+          content?: string
+          rating?: number
+          created_at?: string
+          updated_at?: string | null
+        }
+      }
+      game_sessions: {
+        Row: {
+          id: string
+          game_id: string
+          host_id: string
+          status: string
+          max_players: number
+          current_players: number
+          created_at: string
+          updated_at: string | null
+          metadata: Json | null
+        }
+        Insert: {
+          id?: string
+          game_id: string
+          host_id: string
+          status: string
+          max_players: number
+          current_players: number
+          created_at?: string
+          updated_at?: string | null
+          metadata?: Json | null
+        }
+        Update: {
+          id?: string
+          game_id?: string
+          host_id?: string
+          status?: string
+          max_players?: number
+          current_players?: number
+          created_at?: string
+          updated_at?: string | null
+          metadata?: Json | null
+        }
+      }
+      game_players: {
+        Row: {
+          id: string
+          session_id: string
+          user_id: string
+          status: string
+          joined_at: string
+          score: number | null
+          metadata: Json | null
+        }
+        Insert: {
+          id?: string
+          session_id: string
+          user_id: string
+          status: string
+          joined_at?: string
+          score?: number | null
+          metadata?: Json | null
+        }
+        Update: {
+          id?: string
+          session_id?: string
+          user_id?: string
+          status?: string
+          joined_at?: string
+          score?: number | null
+          metadata?: Json | null
         }
       }
     }

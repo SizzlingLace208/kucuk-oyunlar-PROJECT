@@ -1,16 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { GameManager } from '@/lib/games/GameManager';
 import FavoriteButton from '@/components/ui/FavoriteButton';
 import ShareButton from '@/components/ui/ShareButton';
-import { getGameById, getSimilarGames } from '@/lib/services/game-service';
-import { getGameLeaderboard } from '@/lib/services/leaderboard-service';
+import { getGameById, getSimilarGames, Game as GameType } from '@/lib/services/game-service';
+import { getGameLeaderboard, LeaderboardEntry } from '@/lib/services/leaderboard-service';
 import LeaderboardTable from '@/components/leaderboard/LeaderboardTable';
 import { Skeleton } from '@/components/ui/skeleton';
+import CommentList from '@/components/games/CommentList';
 
 // Örnek oyun verileri
-const games: Record<string, Game> = {
+const games: Record<string, GameType> = {
   '1': {
     id: '1',
     title: 'Uzay Macerası',
@@ -115,13 +116,15 @@ const games: Record<string, Game> = {
 };
 
 export default function GamePage({ params }: { params: { id: string } }) {
-  const [game, setGame] = useState<any>(null);
-  const [similarGames, setSimilarGames] = useState<any[]>([]);
-  const [leaderboard, setLeaderboard] = useState<any[]>([]);
+  const [game, setGame] = useState<GameType | null>(null);
+  const [similarGames, setSimilarGames] = useState<GameType[]>([]);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [activeTab, setActiveTab] = useState<'overview' | 'leaderboard' | 'comments'>('overview');
   const [loading, setLoading] = useState(true);
   const [leaderboardLoading, setLeaderboardLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [latestScore, setLatestScore] = useState<number | null>(null);
+  const gameManagerRef = useRef<GameManager | null>(null);
 
   useEffect(() => {
     async function loadGame() {
@@ -144,7 +147,7 @@ export default function GamePage({ params }: { params: { id: string } }) {
         loadLeaderboard();
       } catch (err) {
         console.error('Oyun yüklenirken hata oluştu:', err);
-        setError('Oyun yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+        setErrorMessage('Oyun yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
       } finally {
         setLoading(false);
       }
@@ -166,6 +169,37 @@ export default function GamePage({ params }: { params: { id: string } }) {
     }
   }
 
+  useEffect(() => {
+    // Oyun yöneticisini oluştur
+    if (game && !gameManagerRef.current) {
+      gameManagerRef.current = new GameManager({
+        gameId: params.id,
+        containerId: 'game-container',
+        width: 800,
+        height: 600,
+        allowFullscreen: true,
+        onScoreSaved: (score) => {
+          setLatestScore(score.score);
+          loadLeaderboard();
+        },
+        onGameReady: () => {
+          console.log('Oyun hazır');
+        },
+        onGameOver: (score) => {
+          setLatestScore(score);
+          loadLeaderboard();
+        }
+      });
+    }
+
+    return () => {
+      // Temizlik işlemleri
+      if (gameManagerRef.current) {
+        // Gerekirse temizlik işlemleri yapılabilir
+      }
+    };
+  }, [params.id, game]);
+
   if (!game) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
@@ -183,6 +217,31 @@ export default function GamePage({ params }: { params: { id: string } }) {
     console.log(`${game.title} ${isFavorite ? 'favorilere eklendi' : 'favorilerden çıkarıldı'}`);
   };
   
+  // Oyun kontrol butonları için işlevler
+  const handlePauseGame = () => {
+    if (gameManagerRef.current) {
+      gameManagerRef.current.pauseGame();
+    }
+  };
+
+  const handleResumeGame = () => {
+    if (gameManagerRef.current) {
+      gameManagerRef.current.resumeGame();
+    }
+  };
+
+  const handleRestartGame = () => {
+    if (gameManagerRef.current) {
+      gameManagerRef.current.restartGame();
+    }
+  };
+
+  // Oyun detay sayfasındaki tip tanımlamaları
+  interface GameTag {
+    name: string;
+    color?: string;
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
@@ -225,21 +284,21 @@ export default function GamePage({ params }: { params: { id: string } }) {
               <div className="flex space-x-4">
                 <button
                   className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors"
-                  onClick={() => gameManager?.pauseGame()}
+                  onClick={handlePauseGame}
                 >
                   Duraklat
                 </button>
                 
                 <button
                   className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors"
-                  onClick={() => gameManager?.resumeGame()}
+                  onClick={handleResumeGame}
                 >
                   Devam Et
                 </button>
                 
                 <button
                   className="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors"
-                  onClick={() => gameManager?.restartGame()}
+                  onClick={handleRestartGame}
                 >
                   Yeniden Başlat
                 </button>
@@ -455,40 +514,8 @@ export default function GamePage({ params }: { params: { id: string } }) {
       )}
       
       {activeTab === 'comments' && (
-        <div>
-          <h2 className="text-2xl font-semibold mb-4">Yorumlar</h2>
-          {/* Yorumlar burada gösterilecek */}
-          <div className="space-y-4">
-            {game?.comments?.map((comment: any) => (
-              <div key={comment.id} className="bg-white p-4 rounded-lg shadow">
-                <div className="flex items-center mb-2">
-                  <div className="w-10 h-10 rounded-full bg-gray-300 mr-3 flex items-center justify-center">
-                    {comment.avatar ? (
-                      <img 
-                        src={comment.avatar} 
-                        alt={comment.user} 
-                        className="w-full h-full rounded-full object-cover"
-                      />
-                    ) : (
-                      <span className="text-gray-600">{comment.user.charAt(0).toUpperCase()}</span>
-                    )}
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">{comment.user}</h3>
-                    <div className="flex items-center">
-                      <div className="flex text-yellow-500 mr-1">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i}>{i < comment.rating ? '★' : '☆'}</span>
-                        ))}
-                      </div>
-                      <span className="text-gray-500 text-sm">{comment.date}</span>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-gray-700">{comment.text}</p>
-              </div>
-            ))}
-          </div>
+        <div className="mt-6">
+          <CommentList gameId={params.id} />
         </div>
       )}
       
