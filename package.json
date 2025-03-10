@@ -1,0 +1,16 @@
+{
+  "name": "kucuk-oyunlar",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd kucukoyunlar && npm run dev",
+    "build": "cd kucukoyunlar && npm run build",
+    "start": "cd kucukoyunlar && npm start",
+    "lint": "cd kucukoyunlar && npm run lint"
+  },
+  "dependencies": {
+    "next": "14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+} 
