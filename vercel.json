@@ -1,11 +1,9 @@
 {
   "version": 2,
   "framework": "nextjs",
-  "buildCommand": "npm run build",
-  "installCommand": "npm install",
-  "outputDirectory": ".next",
-  "rootDirectory": "kucukoyunlar",
-  "ignoreCommand": "false",
+  "buildCommand": "cd kucukoyunlar && npm run build",
+  "installCommand": "cd kucukoyunlar && npm install",
+  "outputDirectory": "kucukoyunlar/.next",
   "regions": ["fra1"],
   "env": {
     "NEXT_PUBLIC_SUPABASE_URL": "@next_public_supabase_url",
