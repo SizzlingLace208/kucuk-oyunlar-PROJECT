@@ -3,8 +3,8 @@
   "framework": "nextjs",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "outputDirectory": "kucukoyunlar/.next",
-  "rootDirectory": ".",
+  "outputDirectory": ".next",
+  "rootDirectory": "kucukoyunlar",
   "ignoreCommand": "false",
   "regions": ["fra1"],
   "env": {
