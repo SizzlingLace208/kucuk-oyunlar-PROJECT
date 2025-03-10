@@ -370,6 +370,30 @@
 - Supabase bilgileri ayarlandı
 - TypeScript tip tanımlamaları oluşturuldu
 
+### 2024-03-24
+- Çok oyunculu oyun desteği geliştirildi
+  - GameSDK'ya çok oyunculu oyun desteği eklendi
+    - Oyun oturumu yönetimi
+    - Oyuncu durumu takibi
+    - Gerçek zamanlı oyun olayları
+    - Çok oyunculu oyun senkronizasyonu
+  - GameManager'a çok oyunculu oyun desteği eklendi
+    - Oturum oluşturma, katılma ve ayrılma işlevleri
+    - Oyuncu listesi yönetimi
+    - Oyun başlatma mekanizması
+    - Oyuncu durumu güncelleme
+  - Supabase şeması güncellendi
+    - game_sessions ve game_players tabloları eklendi
+  - Çok oyunculu oyun lobisi bileşeni iyileştirildi
+  - Linter hataları düzeltildi
+  - Proje genel ilerlemesi %90'a ulaştı
+- Sosyal Özellikler modülü %85'e ulaştı
+  - Çok oyunculu oyun desteği eklendi
+  - Gerçek zamanlı oyuncu etkileşimi eklendi
+- Oyun Entegrasyonu modülü %90'a ulaştı
+  - Çok oyunculu oyun SDK entegrasyonu tamamlandı
+  - Oyun-platform iletişimi genişletildi
+
 ## 📌 Öncelikli Görevler
 
 1. ~~Oyun entegrasyonu tamamlanması~~
