@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "environmentVariables": {
+    "NEXT_PUBLIC_SUPABASE_URL": {
+      "type": "secret"
+    },
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": {
+      "type": "secret"
+    },
+    "SUPABASE_SERVICE_ROLE_KEY": {
+      "type": "secret"
+    },
+    "SUPABASE_JWT_SECRET": {
+      "type": "secret"
+    },
+    "NEXT_PUBLIC_SUPABASE_PROJECT_ID": {
+      "type": "secret"
+    }
+  },
+  "regions": ["fra1"],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ]
+} 
